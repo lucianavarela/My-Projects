@@ -8,9 +8,6 @@ namespace Entidades
 {
     public class NoSeGuardoException :  Exception
     {
-        public NoSeGuardoException(Exception innerException)
-        {
-
-        }
+        public NoSeGuardoException(Exception innerException) : base(innerException.Message) {}
     }
 }

@@ -8,7 +8,7 @@ namespace Entidades
 {
     public abstract class Corredor
     {
-        public enum Carril { }
+        public enum Carril { Carril_1, Carril_2 }
         static protected Random _avance;
         protected Carril _carrilElegido;
         short _velocidadMax;
@@ -26,6 +26,10 @@ namespace Entidades
                 if (value <= 10)
                 {
                     this._velocidadMax = value;
+                }
+                else
+                {
+                    this._velocidadMax = 0;
                 }
             }
         }

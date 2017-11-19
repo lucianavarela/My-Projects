@@ -9,27 +9,39 @@ namespace Entidades
 {
     public class Persona : Corredor
     {
-        public delegate void CorrenCallback(int avance);
+        public delegate void CorrenCallback(int avance, Corredor corredor);
+        static string ruta = "carrera.txt";
 
         string _nombre;
 
         public Persona(string nombre, short velocidadMax, Carril carril)
-            : base (velocidadMax, carril)
+            : base(velocidadMax, carril)
         {
             this._nombre = nombre;
         }
+
+        public string Nombre
+        {
+            get { return this._nombre; }
+        }
+
+
         public override void Correr()
         {
-            int velocidad = (Corredor._avance.Next()) * 10;
-            System.Threading.Thread.Sleep(300);
-            Corriendo.Invoke(velocidad);
+            while (true)
+            {
+                int velocidad = Corredor._avance.Next(0, this.VelocidadMaxima);
+                System.Threading.Thread.Sleep(300);
+                //this.Guardar(ruta);
+                Corriendo.Invoke(velocidad, this);
+            }
         }
 
         public override void Guardar(string path)
         {
             try
             {
-                StreamWriter nuevo_archivo = File.AppendText(path);
+                StreamWriter nuevo_archivo = File.AppendText(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "//" + path);
                 nuevo_archivo.WriteLine(this.ToString());
                 nuevo_archivo.Close();
             }
